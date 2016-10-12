@@ -30,6 +30,7 @@ public class HomeWrapBean {
     private MoreData moreData;
     private List<HomeDataBean> data;
     private String pathKey;
+    private String enTitle;
 
 
     public int getType() {
@@ -46,6 +47,14 @@ public class HomeWrapBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getEnTitle() {
+        return enTitle;
+    }
+
+    public void setEnTitle(String enTitle) {
+        this.enTitle = enTitle;
     }
 
     public String getShowTitle() {

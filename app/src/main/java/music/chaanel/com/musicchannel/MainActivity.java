@@ -5,22 +5,25 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import music.chaanel.com.musicchannel.homepage.view.HomePageFragment;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
 
-    private RadioGroup radioGroup;
+    @BindView(R.id.rg_main)
+    RadioGroup radioGroup;
     private HomePageFragment homePageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        radioGroup = (RadioGroup) findViewById(R.id.rg_main);
         radioGroup.setOnCheckedChangeListener(this);
         homePageFragment = new HomePageFragment();
         RadioButton rb_home = (RadioButton) findViewById(R.id.rb_home_main);

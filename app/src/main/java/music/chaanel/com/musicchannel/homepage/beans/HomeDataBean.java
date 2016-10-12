@@ -42,6 +42,34 @@ public class HomeDataBean {
 
     private List<ArtistsBean> artists;
     private List<Integer> videoTypes;
+    /**
+     * icon : http://img4.c.yinyuetai.com/others/admin/160920/0/-M-e485d2f7a6799aa7012f14e74b2aecde_100x100.png
+     * extend : {"style":"PLAYLIST","supportPage":false,"supportTransverseSlider":false,"type":0,"custom":false}
+     * pathKey : PLAYLIST_BUTTON
+     */
+
+    private String icon;
+    /**
+     * style : PLAYLIST
+     * supportPage : false
+     * supportTransverseSlider : false
+     * type : 0
+     * custom : false
+     */
+
+    private ExtendBean extend;
+    private String pathKey;
+
+    /**
+     *  "title":"悦 单",
+     "icon":"http://img4.c.yinyuetai.com/others/admin/160920/0/-M-e485d2f7a6799aa7012f14e74b2aecde_100x100.png",
+     "extend":Object{...},
+     "pathKey":"PLAYLIST_BUTTON"
+     * @return
+     */
+
+
+
 
     public int getVideoId() {
         return videoId;
@@ -147,6 +175,30 @@ public class HomeDataBean {
         this.videoTypes = videoTypes;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public ExtendBean getExtend() {
+        return extend;
+    }
+
+    public void setExtend(ExtendBean extend) {
+        this.extend = extend;
+    }
+
+    public String getPathKey() {
+        return pathKey;
+    }
+
+    public void setPathKey(String pathKey) {
+        this.pathKey = pathKey;
+    }
+
     public static class ArtistsBean {
         private int artistId;
         private String artistName;
@@ -165,6 +217,54 @@ public class HomeDataBean {
 
         public void setArtistName(String artistName) {
             this.artistName = artistName;
+        }
+    }
+
+    public static class ExtendBean {
+        private String style;
+        private boolean supportPage;
+        private boolean supportTransverseSlider;
+        private int type;
+        private boolean custom;
+
+        public String getStyle() {
+            return style;
+        }
+
+        public void setStyle(String style) {
+            this.style = style;
+        }
+
+        public boolean isSupportPage() {
+            return supportPage;
+        }
+
+        public void setSupportPage(boolean supportPage) {
+            this.supportPage = supportPage;
+        }
+
+        public boolean isSupportTransverseSlider() {
+            return supportTransverseSlider;
+        }
+
+        public void setSupportTransverseSlider(boolean supportTransverseSlider) {
+            this.supportTransverseSlider = supportTransverseSlider;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public boolean isCustom() {
+            return custom;
+        }
+
+        public void setCustom(boolean custom) {
+            this.custom = custom;
         }
     }
 }

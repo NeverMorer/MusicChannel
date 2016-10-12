@@ -1,6 +1,5 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,8 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:padding="10dp"
-            app:layout_scrollFlags="enterAlways">
-
+            app:layout_scrollFlags="scroll|enterAlways">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,6 +27,7 @@
                     android:drawableStart="@mipmap/title_search_btn_n"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12sp"
+                    android:focusable="false"
                     android:text="@string/hint_title_search"
                     android:paddingLeft="10dp" />
 
@@ -42,6 +41,18 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/swipe_home">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_home"
+            android:background="@android:color/white"
+            app:layoutManager="LinearLayoutManager"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>
 

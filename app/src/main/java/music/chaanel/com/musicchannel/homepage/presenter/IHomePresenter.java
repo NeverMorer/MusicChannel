@@ -10,4 +10,5 @@ public interface IHomePresenter {
     void bingView(IHomeView view);
     void unBindView();
     void handleData();
+    IHomeView getView();
 }
