@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -21,5 +22,5 @@ public interface CompoentServer {
             HomeInfo.DEVICE_V
     })
     @GET(HomeInfo.COMPONENT)
-    Call<HomeBean> getCall();
+    Observable<HomeBean> getCall();
 }

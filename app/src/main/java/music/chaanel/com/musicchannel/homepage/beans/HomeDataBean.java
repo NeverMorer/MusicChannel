@@ -1,11 +1,21 @@
 package music.chaanel.com.musicchannel.homepage.beans;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.ToMany;
+import org.greenrobot.greendao.annotation.Transient;
+
 import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
+import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
+import music.chaanel.com.musicchannel.homepage.gen.ArtistsBeanDao;
+import music.chaanel.com.musicchannel.homepage.gen.HomeDataBeanDao;
 
 /**
  * Created by Administrator on 2016/10/12.
  */
-
+@Entity
 public class HomeDataBean {
 
     /**
@@ -23,8 +33,10 @@ public class HomeDataBean {
      * dataTypeUrl : http://img2.c.yinyuetai.com/others/ad/160627/0/-M-c78aa0e2daafe509c640d7559d2fa8b1_0x0.png
      * ad : false
      */
+    @Id
+    private Long videoId;
 
-    private int videoId;
+    private Long homeWrapId;
     private String type;
     private String title;
     private String desc;
@@ -39,8 +51,9 @@ public class HomeDataBean {
      * artistId : 30971
      * artistName : STAR!调查团
      */
-
+    @ToMany(referencedJoinProperty = "homeDataId")
     private List<ArtistsBean> artists;
+    @Transient
     private List<Integer> videoTypes;
     /**
      * icon : http://img4.c.yinyuetai.com/others/admin/160920/0/-M-e485d2f7a6799aa7012f14e74b2aecde_100x100.png
@@ -56,9 +69,38 @@ public class HomeDataBean {
      * type : 0
      * custom : false
      */
-
+    @Transient
     private ExtendBean extend;
     private String pathKey;
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /** Used for active entity operations. */
+    @Generated(hash = 398848359)
+    private transient HomeDataBeanDao myDao;
+
+    @Generated(hash = 1225426227)
+    public HomeDataBean(Long videoId, Long homeWrapId, String type, String title, String desc, String posterPic, int totalView, String clickUrl, String regdate,
+            boolean isVchart, String dataTypeUrl, boolean ad, String icon, String pathKey) {
+        this.videoId = videoId;
+        this.homeWrapId = homeWrapId;
+        this.type = type;
+        this.title = title;
+        this.desc = desc;
+        this.posterPic = posterPic;
+        this.totalView = totalView;
+        this.clickUrl = clickUrl;
+        this.regdate = regdate;
+        this.isVchart = isVchart;
+        this.dataTypeUrl = dataTypeUrl;
+        this.ad = ad;
+        this.icon = icon;
+        this.pathKey = pathKey;
+    }
+
+    @Generated(hash = 92414925)
+    public HomeDataBean() {
+    }
 
     /**
      *  "title":"悦 单",
@@ -71,17 +113,6 @@ public class HomeDataBean {
 
 
 
-    public int getVideoId() {
-        return videoId;
-    }
-
-    public void setVideoId(int videoId) {
-        this.videoId = videoId;
-    }
-
-    public String getType() {
-        return type;
-    }
 
     public void setType(String type) {
         this.type = type;
@@ -159,9 +190,6 @@ public class HomeDataBean {
         this.ad = ad;
     }
 
-    public List<ArtistsBean> getArtists() {
-        return artists;
-    }
 
     public void setArtists(List<ArtistsBean> artists) {
         this.artists = artists;
@@ -199,27 +227,112 @@ public class HomeDataBean {
         this.pathKey = pathKey;
     }
 
-    public static class ArtistsBean {
-        private int artistId;
-        private String artistName;
-
-        public int getArtistId() {
-            return artistId;
-        }
-
-        public void setArtistId(int artistId) {
-            this.artistId = artistId;
-        }
-
-        public String getArtistName() {
-            return artistName;
-        }
-
-        public void setArtistName(String artistName) {
-            this.artistName = artistName;
-        }
+    public boolean getIsVchart() {
+        return this.isVchart;
     }
 
+    public boolean getAd() {
+        return this.ad;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 749747179)
+    public List<ArtistsBean> getArtists() {
+        if (artists == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            ArtistsBeanDao targetDao = daoSession.getArtistsBeanDao();
+            List<ArtistsBean> artistsNew = targetDao._queryHomeDataBean_Artists(videoId);
+            synchronized (this) {
+                if (artists == null) {
+                    artists = artistsNew;
+                }
+            }
+        }
+        return artists;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1544541877)
+    public synchronized void resetArtists() {
+        artists = null;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    public long getHomeWrapId() {
+        return this.homeWrapId;
+    }
+
+    public void setHomeWrapId(long homeWrapId) {
+        this.homeWrapId = homeWrapId;
+    }
+
+    public void setVideoId(Long videoId) {
+        this.videoId = videoId;
+    }
+
+    public void setHomeWrapId(Long homeWrapId) {
+        this.homeWrapId = homeWrapId;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1769562015)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getHomeDataBeanDao() : null;
+    }
+
+    public Long getVideoId() {
+        return this.videoId;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+
+
+    @Entity
     public static class ExtendBean {
         private String style;
         private boolean supportPage;

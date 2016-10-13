@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="2"
-        android:id="@+id/container_list_home"/>
+        android:id="@+id/container_list_home"
+        android:padding="7dp"/>
 
 </LinearLayout>

@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import music.chaanel.com.musicchannel.R;
+import music.chaanel.com.musicchannel.homepage.beans.ArtistsBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeDataBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeWrapBean;
 import music.chaanel.com.musicchannel.homepage.utils.SceenUtil;
@@ -51,6 +52,7 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
     }
 
     public void setData(List<HomeWrapBean> list){
+        this.list.clear();
         this.list = list;
         notifyDataSetChanged();
 
@@ -121,7 +123,10 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                     HomeDataBean homeDataBean = list_hdb.get(i);
                     Picasso.with(context).load(homeDataBean.getPosterPic()).into(iv);
                     tv_name.setText(homeDataBean.getTitle());
-                    tv_author.setText(homeDataBean.getArtists().get(0).getArtistName());
+                    List<ArtistsBean> artists = homeDataBean.getArtists();
+                    if (artists != null && artists.size() > 0) {
+                        tv_author.setText(artists.get(0).getArtistName());
+                    }
                     tv_playtimes.setText("播放量: "+homeDataBean.getTotalView());
                     int width = SceenUtil.getWidth(context);
                     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT);
