@@ -5,7 +5,8 @@
     android:layout_height="30dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:layout_marginTop="10dp">
     <EditText
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -14,6 +15,7 @@
         android:layout_marginLeft="10dp"
         android:textColor="@android:color/darker_gray"
         android:paddingLeft="10dp"
+        android:textSize="10dp"
         android:hint="发个JB弹幕"
         android:layout_marginRight="10dp"/>
     <ImageView

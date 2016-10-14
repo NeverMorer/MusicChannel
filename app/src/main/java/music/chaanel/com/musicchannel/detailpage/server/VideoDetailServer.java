@@ -21,5 +21,5 @@ public interface VideoDetailServer {
             RequestInfo.DEVICE_V
     })
     @GET(RequestInfo.VIDEO)
-    Call<DetailVideoBean> getCall(@Query("id") String id ,@Query("type") String type);
+    Call<DetailVideoBean> getCall(@Query("videoId") String id );
 }

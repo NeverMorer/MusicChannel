@@ -2,6 +2,7 @@ package music.chaanel.com.musicchannel.homepage.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.util.Pools;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
@@ -79,6 +80,7 @@ public class HomePagerAdapter extends PagerAdapter implements View.OnClickListen
             Long videoId = homeDataBean.getVideoId();
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("id",videoId+"");
+
             context.startActivity(intent);
         }
 

@@ -9,8 +9,8 @@ import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
-import music.chaanel.com.musicchannel.homepage.gen.ArtistsBeanDao;
 import music.chaanel.com.musicchannel.homepage.gen.HomeDataBeanDao;
+import music.chaanel.com.musicchannel.homepage.gen.ArtistsBeanDao;
 
 /**
  * Created by Administrator on 2016/10/12.

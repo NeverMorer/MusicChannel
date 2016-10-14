@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="7dp">
+    >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/blackGrey"
+        android:layout_marginTop="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginTop="7dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp">
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -18,6 +27,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_singer_detail"
+            android:textColor="@android:color/white"
             android:text="林俊杰"
             android:layout_marginLeft="7dp"/>
         <ImageView
@@ -31,12 +42,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
         android:gravity="center_vertical">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_playtimes_detail"
+            android:textSize="12dp"
             android:text="播放次数:155615"/>
         <ImageButton
             android:layout_width="30dp"
@@ -45,26 +60,26 @@
             android:id="@+id/ib_comment_detail_content"
             android:layout_marginLeft="10dp"/>
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/video_control_collect"
             android:layout_marginLeft="10dp"
             android:id="@+id/ib_collect_detail_content"/>
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/video_control_add_playlist"
             android:id="@+id/ib_control_detail_content"/>
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/video_control_download"
             android:id="@+id/ib_download_detail_content"/>
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/video_control_share_img"
             android:id="@+id/ib_share_detail_content"/>
@@ -73,21 +88,30 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxEms="2"
+        android:maxLines="2"
         android:ellipsize="end"
         android:layout_marginTop="10dp"
+        android:paddingLeft="7dp"
+        android:textColor="@android:color/white"
+        android:paddingRight="7dp"
+        android:id="@+id/tv_content_detail"
         tools:text="大发来看大家费点卡啦减肥的考拉就付款单使肌肤的拉萨放到了空间啊s"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_marginRight="7dp"
+        android:id="@+id/iv_expend_detail"
         android:background="@mipmap/video_img_hide_desc"
         android:layout_marginTop="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:layout_marginTop="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +120,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textColor="@color/shitGreen"
+            android:id="@+id/tv_artist_detail"
+            android:textColor="@color/textColor"
             tools:text="刘谋"/>
         <ImageView
             android:layout_width="wrap_content"
@@ -106,6 +131,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_date_detail"
             tools:text="2016:16:15"/>
 
     </LinearLayout>

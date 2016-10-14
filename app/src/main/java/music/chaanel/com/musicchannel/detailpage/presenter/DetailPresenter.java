@@ -35,7 +35,7 @@ public class DetailPresenter implements IDetailPresenter {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         VideoDetailServer server = retrofit.create(VideoDetailServer.class);
-        Call<DetailVideoBean> call = server.getCall(videoId,"1");
+        Call<DetailVideoBean> call = server.getCall(videoId);
         call.enqueue(new Callback<DetailVideoBean>() {
             @Override
             public void onResponse(Call<DetailVideoBean> call, Response<DetailVideoBean> response) {

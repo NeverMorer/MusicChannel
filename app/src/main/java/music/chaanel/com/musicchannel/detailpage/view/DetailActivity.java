@@ -2,22 +2,23 @@ package music.chaanel.com.musicchannel.detailpage.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -31,9 +32,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import music.chaanel.com.musicchannel.R;
+import music.chaanel.com.musicchannel.detailpage.adapter.DetailDataAdapter;
 import music.chaanel.com.musicchannel.detailpage.beans.DetailVideoBean;
 import music.chaanel.com.musicchannel.detailpage.presenter.DetailPresenter;
-import music.chaanel.com.musicchannel.detailpage.presenter.IDetailPresenter;
 import music.chaanel.com.musicchannel.utils.MyTextUtil;
 
 public class DetailActivity extends AppCompatActivity implements IDetailView<DetailPresenter>, SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -52,6 +53,9 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
     @BindView(R.id.sb_play)
     SeekBar seekBar;
 
+    @BindView(R.id.recycler_detail)
+    RecyclerView recyclerView;
+
     private MediaPlayer mediaPlayer;
     private String url;
     private String id;
@@ -64,6 +68,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
 
     private ObjectAnimator alphaShow;
     private ObjectAnimator alphaGone;
+    private DetailDataAdapter detailDataAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +106,9 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
     }
 
     private void initView() {
+        //recyclerView.addItemDecoration(new MyItemDecorator());
+        detailDataAdapter = new DetailDataAdapter(this);
+        recyclerView.setAdapter(detailDataAdapter);
 
         container_player.setTag(1);
 
@@ -119,6 +127,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
 
     @Override
     public void showData(DetailVideoBean detailVideoBean) {
+        detailDataAdapter.setData(detailVideoBean);
 
         url = detailVideoBean.getData().getUrl();
         if (TextUtils.isEmpty(url)) {
@@ -127,6 +136,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         if(isLoaded){
             startPlay(holder);
         }
+
     }
 
     @Override
@@ -250,6 +260,33 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
                 rb_play.setChecked(true);
                 handler.sendEmptyMessage(100);
             }
+        }
+    }
+
+    public static class MyItemDecorator extends RecyclerView.ItemDecoration{
+
+        private final Paint paint;
+
+        public MyItemDecorator() {
+            paint = new Paint();
+            paint.setColor(Color.rgb(0xe4,0xe4,0xe0));
+        }
+
+        @Override
+        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            int childCount = parent.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                View childAt = parent.getChildAt(i);
+                int y = childAt.getBottom() + 5;
+                c.drawLine(0, y,parent.getWidth(),y,paint);
+
+            }
+
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.set(5,5,5,5);
         }
     }
 }

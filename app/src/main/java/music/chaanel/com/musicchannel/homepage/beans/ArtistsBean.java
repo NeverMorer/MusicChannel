@@ -14,16 +14,33 @@ public  class ArtistsBean {
     private Long artistId;
     private Long homeDataId;
     private String artistName;
+    private String artistAvatar;
 
-    @Generated(hash = 1063026)
-    public ArtistsBean(Long artistId, Long homeDataId, String artistName) {
+
+
+
+    @Generated(hash = 1223664823)
+    public ArtistsBean(Long artistId, Long homeDataId, String artistName,
+            String artistAvatar) {
         this.artistId = artistId;
         this.homeDataId = homeDataId;
         this.artistName = artistName;
+        this.artistAvatar = artistAvatar;
     }
 
     @Generated(hash = 1706888482)
     public ArtistsBean() {
+    }
+
+
+
+
+    public String getArtistAvatar() {
+        return artistAvatar;
+    }
+
+    public void setArtistAvatar(String artistAvatar) {
+        this.artistAvatar = artistAvatar;
     }
 
     public Long getArtistId() {

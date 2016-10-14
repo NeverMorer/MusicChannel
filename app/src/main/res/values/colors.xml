@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#09090a</color>
     <color name="colorAccent">#f4efef</color>
     <color name="grey">#e4e0e0</color>
-    <color name="textColor">#b93147</color>
+    <color name="blackGrey">#343535</color>
+    <color name="textColor">#48a173</color>
     <color name="shitGreen">#42a158</color>
 </resources>

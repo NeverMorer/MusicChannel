@@ -17,7 +17,7 @@ public class GreenDaoManager {
 
 
     private GreenDaoManager(Context context) {
-        MyOpenHelper myOpenHelper = new MyOpenHelper(context, "homepage");
+        MyOpenHelper myOpenHelper = new MyOpenHelper(context, "home");
         daoMaster = new DaoMaster(myOpenHelper.getWritableDatabase());
         session = daoMaster.newSession();
     }

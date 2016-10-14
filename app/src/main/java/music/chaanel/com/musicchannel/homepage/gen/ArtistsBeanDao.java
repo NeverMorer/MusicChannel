@@ -30,6 +30,7 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         public final static Property ArtistId = new Property(0, Long.class, "artistId", true, "_id");
         public final static Property HomeDataId = new Property(1, Long.class, "homeDataId", false, "HOME_DATA_ID");
         public final static Property ArtistName = new Property(2, String.class, "artistName", false, "ARTIST_NAME");
+        public final static Property ArtistAvatar = new Property(3, String.class, "artistAvatar", false, "ARTIST_AVATAR");
     }
 
     private Query<ArtistsBean> homeDataBean_ArtistsQuery;
@@ -48,7 +49,8 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"ARTISTS_BEAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: artistId
                 "\"HOME_DATA_ID\" INTEGER," + // 1: homeDataId
-                "\"ARTIST_NAME\" TEXT);"); // 2: artistName
+                "\"ARTIST_NAME\" TEXT," + // 2: artistName
+                "\"ARTIST_AVATAR\" TEXT);"); // 3: artistAvatar
     }
 
     /** Drops the underlying database table. */
@@ -75,6 +77,11 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         if (artistName != null) {
             stmt.bindString(3, artistName);
         }
+ 
+        String artistAvatar = entity.getArtistAvatar();
+        if (artistAvatar != null) {
+            stmt.bindString(4, artistAvatar);
+        }
     }
 
     @Override
@@ -95,6 +102,11 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         if (artistName != null) {
             stmt.bindString(3, artistName);
         }
+ 
+        String artistAvatar = entity.getArtistAvatar();
+        if (artistAvatar != null) {
+            stmt.bindString(4, artistAvatar);
+        }
     }
 
     @Override
@@ -107,7 +119,8 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         ArtistsBean entity = new ArtistsBean( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // artistId
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // homeDataId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // artistName
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // artistName
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // artistAvatar
         );
         return entity;
     }
@@ -117,6 +130,7 @@ public class ArtistsBeanDao extends AbstractDao<ArtistsBean, Long> {
         entity.setArtistId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setHomeDataId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setArtistName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setArtistAvatar(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override
