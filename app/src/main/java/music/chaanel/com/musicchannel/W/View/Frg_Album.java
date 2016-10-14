@@ -12,13 +12,14 @@ import music.chaanel.com.musicchannel.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Frg_V extends Fragment {
+public class Frg_Album extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frg__v, container, false);
+        return inflater.inflate(R.layout.data_common, container, false);
     }
 
 }
