@@ -29,26 +29,24 @@ import music.chaanel.com.musicchannel.R;
 import music.chaanel.com.musicchannel.W.Adapters.RecyclerAdapter;
 import music.chaanel.com.musicchannel.W.Adapters.ViewPagerAdapter;
 import music.chaanel.com.musicchannel.W.Beans.BaseBean;
-import music.chaanel.com.musicchannel.W.Beans.MVBean;
-import music.chaanel.com.musicchannel.W.Beans.Urls;
-import music.chaanel.com.musicchannel.W.Presenter.mvPresenter;
+import music.chaanel.com.musicchannel.W.Presenter.BasePresenter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Frg_MV extends Fragment implements BaseView, View.OnClickListener, PtrHandler {
-
-
-    private ViewPager viewpager;
-    private TabLayout tab;
-    private TextView tv_time;
-    private TextView tv_updatetime;
-    private ViewPagerAdapter pagerAdapter;
-    private Map<String, RecyclerAdapter> adapterMap;
-    public static final int MV_TAG = 0;
-    private mvPresenter mvPresenter;
-    private PtrFrameLayout frame;
-
+public abstract class VFragment extends Fragment implements PtrHandler, View.OnClickListener,BaseView {
+    ViewPager viewpager;
+    TabLayout tab;
+    TextView tv_time;
+    TextView tv_updatetime;
+    ViewPagerAdapter pagerAdapter;
+    Map<String,RecyclerAdapter> adapterMap;
+    public static int TAG;
+    BasePresenter presenter;
+    PtrFrameLayout frame;
+    int recyclerviewCount;
+    View btn_back;
+    View btn_go;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,43 +54,43 @@ public class Frg_MV extends Fragment implements BaseView, View.OnClickListener, 
         return inflater.inflate(R.layout.data_common, container, false);
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setFragmentTag();
+        setRecyclerviewCount();
         adapterMap = new HashMap<>();
         viewpager = ((ViewPager) view.findViewById(R.id.viewpager_v));
 //        ViewGroup.LayoutParams params = view.findViewById(R.id.time_layout).getLayoutParams();
 //        ((AppBarLayout.LayoutParams) params).setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+        btn_back = ((View) view.findViewById(R.id.btn_back));
+        btn_go = ((View) view.findViewById(R.id.btn_go));
         tab = ((TabLayout) view.findViewById(R.id.tab_frgv));
         view.findViewById(R.id.tv_rules).setOnClickListener(this);
         tv_time = ((TextView) view.findViewById(R.id.tv_time));
         tv_updatetime = ((TextView) view.findViewById(R.id.tv_updatetime));
         List<View> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < recyclerviewCount; i++) {
             list.add(getRecycler(i));
         }
-        pagerAdapter = new ViewPagerAdapter(list, getActivity(), MV_TAG);
+        pagerAdapter = new ViewPagerAdapter(list,getActivity(),TAG);
         viewpager.setOffscreenPageLimit(pagerAdapter.getCount());
         viewpager.setAdapter(pagerAdapter);
         tab.setupWithViewPager(viewpager);
         requestData();
     }
 
-    private void requestData() {
-        mvPresenter = new mvPresenter(this, getActivity(), false);
-        mvPresenter.go(Urls.ml, 0)
-                .go(Urls.us, 0)
-                .go(Urls.jp, 0)
-                .go(Urls.kr, 0)
-                .go(Urls.gangtai, 0);
+    abstract public void requestData();
+
+    abstract public void requestDataForRefresh(String location);
+
+    public void requestData(String location,String id)
+    {
+
     }
 
-    private void requestDataForRefresh(String location) {
-        if (mvPresenter == null)
-            mvPresenter = new mvPresenter(this, getActivity(), false);
-        else
-            mvPresenter.go(location, 0);
-    }
+    abstract public void requestData(String location,String id,int page);
 
     private PtrClassicFrameLayout getRecycler(int tag) {
         PtrClassicFrameLayout layout = (PtrClassicFrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.recyclerview, null);
@@ -102,71 +100,17 @@ public class Frg_MV extends Fragment implements BaseView, View.OnClickListener, 
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         List<BaseBean> list = new ArrayList<>();
-        RecyclerAdapter adapter = new RecyclerAdapter(list, getActivity());
+        RecyclerAdapter adapter = new RecyclerAdapter(list,getActivity());
         recyclerView.setAdapter(adapter);
-        switch (tag) {
-            case 0:
-                adapterMap.put(Urls.ml, adapter);
-                break;
-            case 1:
-                adapterMap.put(Urls.gangtai, adapter);
-                break;
-            case 2:
-                adapterMap.put(Urls.us, adapter);
-                break;
-            case 3:
-                adapterMap.put(Urls.kr, adapter);
-                break;
-            case 4:
-                adapterMap.put(Urls.jp, adapter);
-                break;
-        }
+        putTag(tag, adapter);
         return layout;
     }
 
-    @Override
-    public void showData(BaseBean baseBean) {
+    abstract public void putTag(int tag, RecyclerAdapter adapter);
 
-    }
+    abstract public void setFragmentTag();
 
-    @Override
-    public void showData(BaseBean baseBean, String location) {
-
-    }
-
-    @Override
-    public void showData(BaseBean baseBean, String location, boolean isAdd) {
-        tv_time.setText(((MVBean) baseBean).getData().getDateCode() + " ");
-        tv_updatetime.setText(((MVBean) baseBean).getData().getBeginDateText() + "  第" + ((MVBean) baseBean).getData().getPeriods() + "期  ");
-        adapterMap.get(location).refresh(((MVBean) baseBean).getData().getVideos());
-        if (frame != null && frame.isRefreshing())
-            frame.refreshComplete();
-    }
-
-    @Override
-    public void loadError(final String info) {
-        if (frame != null && frame.isRefreshing())
-            frame.refreshComplete();
-        Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
-        if (adapterMap.get(info) != null) {
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    requestDataForRefresh(info);
-                }
-            }, 3000);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_rules:
-
-                break;
-        }
-    }
+    abstract public void setRecyclerviewCount();
 
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
@@ -175,7 +119,7 @@ public class Frg_MV extends Fragment implements BaseView, View.OnClickListener, 
                 int position = ((LinearLayoutManager) ((RecyclerView) content).getLayoutManager()).findFirstVisibleItemPosition();
 //                Log.e("自定义标签", "类名==Frg_MV" + "position  =  "+position);
 //                Log.e("自定义标签", "类名==Frg_MV" + "getTop  =  " + ((RecyclerView) content).getChildAt(position).getTop());
-                if (position == 0 && ((RecyclerView) content).getChildAt(position).getTop() >= 8) {
+                if (position == 0 && ((RecyclerView) content).getChildAt(position).getTop() >= 0) {
                     return true;
                 }
             }
@@ -203,8 +147,48 @@ public class Frg_MV extends Fragment implements BaseView, View.OnClickListener, 
     }
 
     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_rules:
+
+                break;
+        }
+    }
+
+    @Override
+    public void showData(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void showData(BaseBean baseBean, String location) {
+
+    }
+
+    @Override
+    public void showData(BaseBean baseBean, String location, boolean isAdd) {
+
+    }
+
+    @Override
+    public void loadError(final String info) {
+        if (frame != null && frame.isRefreshing())
+            frame.refreshComplete();
+        Toast.makeText(getActivity(), "网络异常", Toast.LENGTH_SHORT).show();
+        if (adapterMap.get(info) != null) {
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    requestDataForRefresh(info);
+                }
+            }, 3000);
+        }
+    }
+
+    @Override
     public void onDestroy() {
-        mvPresenter.cancelAll();
+        presenter.cancelAll();
         super.onDestroy();
     }
 }

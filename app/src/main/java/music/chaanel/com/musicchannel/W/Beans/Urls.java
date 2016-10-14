@@ -39,9 +39,10 @@ public interface Urls {
     String us="US";//欧美
     String kr="KR";//韩国
     String jp="JP";//日本
-    String AlbumUrl="/album/trend_rank.json?&size=20";
+    String AlbumUrl="/album/trend_rank.json?";
     String AlbumUrl_2="/album/trend_rank.json?&offset=%d&size=20&type=ml";//内地
     String jinkou="im";//进口
+    String neidi="ml";
     String cvc="/cvc/trend.json?&offset=0&size=30";//top30
     String bb="/bb/trend.json?&size=20";//billboardtop100
 }

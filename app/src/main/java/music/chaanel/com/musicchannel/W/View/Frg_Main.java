@@ -28,7 +28,7 @@ public class Frg_Main extends Fragment implements RadioGroup.OnCheckedChangeList
         View v = inflater.inflate(R.layout.fragment_frg__v, container, false);
         RadioGroup group = ((RadioGroup) v.findViewById(R.id.radiogroup_v));
         group.setOnCheckedChangeListener(this);
-        MV = new Frg_MV();
+        MV = new Fragment_MV();
         getChildFragmentManager().beginTransaction().replace(R.id.container,MV).commit();
         lastFrg = MV;
         return v;
@@ -67,7 +67,7 @@ public class Frg_Main extends Fragment implements RadioGroup.OnCheckedChangeList
             case R.id.rb_mv:
                 if(MV==null)
                 {
-                    MV = new Frg_MV();
+                    MV = new Fragment_MV();
                     fragmentTransaction.hide(lastFrg).add(R.id.container,MV);
                     lastFrg = MV;
                 }

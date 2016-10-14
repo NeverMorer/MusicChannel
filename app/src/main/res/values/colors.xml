@@ -9,4 +9,8 @@
     <color name="GREEN2">#5fd48a</color>
     <color name="BLACK">#000</color>
     <color name="LINE">#29281f</color>
+    <color name="PINK">#ff159a</color>
+    <color name="BLUE">#0be3ef</color>
+    <color name="GREEN3">#0bf5a7</color>
+    <color name="GRAY">#bcbbbb</color>
 </resources>

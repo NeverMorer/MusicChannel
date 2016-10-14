@@ -1,5 +1,7 @@
 package music.chaanel.com.musicchannel.W.Beans;
 
+import android.view.View;
+
 import java.util.List;
 
 /**
@@ -94,7 +96,7 @@ public class AlbumBean implements BaseBean {
         this.cost = cost;
     }
 
-    public static class DataBean {
+    public static class DataBean implements View.OnClickListener {
         private String periodId;
         private String period;
         private String startDate;
@@ -179,6 +181,11 @@ public class AlbumBean implements BaseBean {
 
         public void setVideos(List<VideosBean> videos) {
             this.videos = videos;
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
 
         public static class VideosBean implements BaseBean{

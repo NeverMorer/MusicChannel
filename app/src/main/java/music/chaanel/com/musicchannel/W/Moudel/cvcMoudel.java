@@ -1,4 +1,8 @@
-package music.chaanel.com.musicchannel.W.Beans;
+package music.chaanel.com.musicchannel.W.Moudel;
+
+import music.chaanel.com.musicchannel.W.Beans.CVCBean;
+import music.chaanel.com.musicchannel.W.Servers.UrlServer;
+import retrofit2.Call;
 
 /**
  * /**
@@ -25,6 +29,14 @@ package music.chaanel.com.musicchannel.W.Beans;
  */
 
 
-public interface BaseBean {
+public class cvcMoudel extends BaseMoudel<CVCBean> {
 
+    public cvcMoudel(String location, int page) {
+        super(location, page);
+    }
+
+    @Override
+    public Call<CVCBean> getCall(UrlServer urlServer) {
+        return urlServer.getCVC();
+    }
 }

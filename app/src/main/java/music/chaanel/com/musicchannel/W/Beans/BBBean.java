@@ -150,7 +150,7 @@ public class BBBean implements BaseBean {
             this.videos = videos;
         }
 
-        public static class VideosBean {
+        public static class VideosBean implements BaseBean{
             private String videoId;
             private String title;
             private String posterPic;
