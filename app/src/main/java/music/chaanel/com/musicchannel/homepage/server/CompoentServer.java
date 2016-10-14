@@ -1,11 +1,9 @@
 package music.chaanel.com.musicchannel.homepage.server;
 
 import music.chaanel.com.musicchannel.homepage.beans.HomeBean;
-import music.chaanel.com.musicchannel.homepage.utils.HomeInfo;
-import retrofit2.Call;
+import music.chaanel.com.musicchannel.utils.RequestInfo;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -14,13 +12,13 @@ import rx.Observable;
 
 public interface CompoentServer {
     @Headers({
-            HomeInfo.AUTHORIZATION,
-            HomeInfo.DEVICE_INFO,
-            HomeInfo.APP_ID,
-            HomeInfo.DEVICE_ID,
-            HomeInfo.DEVICE_N,
-            HomeInfo.DEVICE_V
+            RequestInfo.AUTHORIZATION,
+            RequestInfo.DEVICE_INFO,
+            RequestInfo.APP_ID,
+            RequestInfo.DEVICE_ID,
+            RequestInfo.DEVICE_N,
+            RequestInfo.DEVICE_V
     })
-    @GET(HomeInfo.COMPONENT)
+    @GET(RequestInfo.COMPONENT)
     Observable<HomeBean> getCall();
 }

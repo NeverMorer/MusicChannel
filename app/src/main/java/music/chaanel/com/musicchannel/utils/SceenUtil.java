@@ -1,4 +1,4 @@
-package music.chaanel.com.musicchannel.homepage.utils;
+package music.chaanel.com.musicchannel.utils;
 
 import android.content.Context;
 import android.view.WindowManager;
@@ -8,7 +8,6 @@ import android.view.WindowManager;
  */
 
 public class SceenUtil {
-
     public static int getWidth(Context context){
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int width = windowManager.getDefaultDisplay().getWidth();

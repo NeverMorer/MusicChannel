@@ -1,7 +1,5 @@
 package music.chaanel.com.musicchannel.homepage.presenter;
 
-import android.util.Log;
-
 import java.util.List;
 
 import music.chaanel.com.musicchannel.homepage.beans.ArtistsBean;
@@ -15,16 +13,12 @@ import music.chaanel.com.musicchannel.homepage.gen.HomeBeanDao;
 import music.chaanel.com.musicchannel.homepage.gen.HomeDataBeanDao;
 import music.chaanel.com.musicchannel.homepage.gen.HomeWrapBeanDao;
 import music.chaanel.com.musicchannel.homepage.server.CompoentServer;
-import music.chaanel.com.musicchannel.homepage.utils.HomeInfo;
+import music.chaanel.com.musicchannel.utils.RequestInfo;
 import music.chaanel.com.musicchannel.homepage.view.IHomeView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -51,7 +45,7 @@ public class HomePresenter implements IHomePresenter {
     @Override
     public void handleData() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(HomeInfo.BASE_URL)
+                .baseUrl(RequestInfo.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

@@ -4,14 +4,12 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -28,7 +26,7 @@ import music.chaanel.com.musicchannel.R;
 import music.chaanel.com.musicchannel.homepage.beans.ArtistsBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeDataBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeWrapBean;
-import music.chaanel.com.musicchannel.homepage.utils.SceenUtil;
+import music.chaanel.com.musicchannel.utils.SceenUtil;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -52,9 +50,17 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
     }
 
     public void setData(List<HomeWrapBean> list){
-        this.list.clear();
-        this.list = list;
-        notifyDataSetChanged();
+        if (this.list.size() > 0) {
+            this.list.clear();
+            this.list = list;
+            notifyItemRangeChanged(0,list.size()-1);
+        }else{
+            this.list.clear();
+            this.list = list;
+            notifyItemRangeInserted(0,list.size()-1);
+        }
+
+
 
     }
 
@@ -99,9 +105,9 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                 holder.startScroll();
                 break;
             case 2:
-                Picasso.with(context).load(homeWrapBean.getData().get(0).getIcon()).into(holder.iv_group_1);
-                Picasso.with(context).load(homeWrapBean.getData().get(1).getIcon()).into(holder.iv_group_2);
-                Picasso.with(context).load(homeWrapBean.getData().get(2).getIcon()).into(holder.iv_group_3);
+                Picasso.with(context).load(homeWrapBean.getData().get(0).getIcon()).placeholder(R.mipmap.ad_video_default).into(holder.iv_group_1);
+                Picasso.with(context).load(homeWrapBean.getData().get(1).getIcon()).placeholder(R.mipmap.ad_video_default).into(holder.iv_group_2);
+                Picasso.with(context).load(homeWrapBean.getData().get(2).getIcon()).placeholder(R.mipmap.ad_video_default).into(holder.iv_group_3);
                 holder.tv_group_1.setText(homeWrapBean.getData().get(0).getTitle());
                 holder.tv_group_2.setText(homeWrapBean.getData().get(1).getTitle());
                 holder.tv_group_3.setText(homeWrapBean.getData().get(2).getTitle());
@@ -121,7 +127,7 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                     TextView tv_author = (TextView) view.findViewById(R.id.tv_author_list_home);
                     TextView tv_playtimes = (TextView) view.findViewById(R.id.tv_playtimes_list_home);
                     HomeDataBean homeDataBean = list_hdb.get(i);
-                    Picasso.with(context).load(homeDataBean.getPosterPic()).into(iv);
+                    Picasso.with(context).load(homeDataBean.getPosterPic()).placeholder(R.mipmap.ad_video_default).into(iv);
                     tv_name.setText(homeDataBean.getTitle());
                     List<ArtistsBean> artists = homeDataBean.getArtists();
                     if (artists != null && artists.size() > 0) {
@@ -129,7 +135,7 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                     }
                     tv_playtimes.setText("播放量: "+homeDataBean.getTotalView());
                     int width = SceenUtil.getWidth(context);
-                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width / 2 - 5, ViewGroup.LayoutParams.WRAP_CONTENT  );
                     holder.container_list.addView(view,layoutParams);
                 }
                 break;
@@ -139,7 +145,6 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("sunc", "getItemViewType: "+ position);
         int type = list.get(position).getType();
         return type;
     }
