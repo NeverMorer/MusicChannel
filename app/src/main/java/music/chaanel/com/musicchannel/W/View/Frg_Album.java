@@ -33,7 +33,7 @@ public class Frg_Album extends VFragment {
     public void requestData(String location, String id, int page) {
         if (presenter == null)
             presenter = new albumPresenter(this, getActivity(), false);
-        ((albumPresenter) presenter).goback(location,page,id);
+        presenter.go(location,page);
     }
 
     @Override
@@ -71,13 +71,17 @@ public class Frg_Album extends VFragment {
 
     @Override
     public void showData(final BaseBean baseBean, final String location, boolean isAdd) {
-        adapterMap.get(location).refresh(((AlbumBean) baseBean).getData().getVideos());
-//        btn_back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                requestData(location,((AlbumBean) baseBean).getData().getPreId(),0);
-//            }
-//        });
+        RecyclerAdapter adapter = adapterMap.get(location);
+        if(!adapter.isRefreshing&&baseBean!=null)
+        {
+            adapter.refresh(((AlbumBean) baseBean).getData().getVideos());
+        }else if(adapter.isRefreshing)
+        {
+            adapter.delete(adapter.getItemCount()-1);
+            if(baseBean!=null)
+                adapter.addAll(((AlbumBean) baseBean).getData().getVideos());
+        }
+        adapter.isRefreshing = false;
         if (frame != null && frame.isRefreshing())
             frame.refreshComplete();
     }

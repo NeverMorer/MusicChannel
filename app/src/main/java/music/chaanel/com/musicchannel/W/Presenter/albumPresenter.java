@@ -57,7 +57,8 @@ public class albumPresenter extends BasePresenter implements OnLoadComplete<Albu
     @Override
     public void callback(Response<AlbumBean> response, BaseMoudel baseMoudel) {
         if (response.body() == null || response.body().getData() == null) {
-            Toast.makeText(context, "解析数据出错", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            view.showData(null, moudelMap.get(baseMoudel), isAdd);
         } else
             view.showData(response.body(), moudelMap.get(baseMoudel), isAdd);
     }
