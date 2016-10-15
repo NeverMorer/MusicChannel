@@ -37,7 +37,8 @@ import music.chaanel.com.musicchannel.utils.SceenUtil;
  * Created by Administrator on 2016/10/14.
  */
 
-public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.MyViewHolder> {
+public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.MyViewHolder>
+    implements StickyRecyclerHeadersAdapter<DetailDataAdapter.MyViewHolder>{
     private DetailVideoBean detailVideoBean;
     private CommentVideoBean commentVideoBean;
 
@@ -48,7 +49,6 @@ public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.My
             R.layout.item_detail_content,
             R.layout.item_scroll_detail,
             R.layout.item_related_detail,
-            R.layout.item_comment_head_detail,
             R.layout.item_comment_content_detail
     };
 
@@ -90,12 +90,9 @@ public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.My
             case 4:
                 view = inflater.inflate(ids[3], parent, false);
                 break;
-            case 5:
-                view = inflater.inflate(ids[4], parent, false);
-                break;
         }
-        if (viewType > 5) {
-            view = inflater.inflate(ids[5], parent, false);
+        if (viewType > 4) {
+            view = inflater.inflate(ids[4], parent, false);
         }
         return new MyViewHolder(view);
     }
@@ -178,12 +175,10 @@ public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.My
                     holder.container_related_detail.addView(view, layoutParams);
                 }
                 break;
-            case 4:
-                break;
         }
-        if (position > 4) {
+        if (position > 3) {
 
-            CommentVideoBean.DataBean.CommentsBean commentsBean = commentVideoBean.getData().getComments().get(position - 5);
+            CommentVideoBean.DataBean.CommentsBean commentsBean = commentVideoBean.getData().getComments().get(position - ids.length + 1);
             holder.tv_name_comment.setText(commentsBean.getCommentUser().getNickName());
             holder.tv_content_comment.setText(commentsBean.getContent());
             holder.tv_ago_comment.setText(commentsBean.getDateCreated());
@@ -196,11 +191,28 @@ public class DetailDataAdapter extends RecyclerView.Adapter<DetailDataAdapter.My
         }
     }
 
+    @Override
+    public long getHeaderId(int position) {
+        if (position > (ids.length - 2)) {
+            return 5;
+        }
+        return -1;
+    }
 
+    @Override
+    public MyViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
+        View view = inflater.inflate(R.layout.item_comment_head_detail, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindHeaderViewHolder(MyViewHolder holder, int position) {
+
+    }
 
     @Override
     public int getItemCount() {
-        int count = detailVideoBean == null ? 0 : (ids.length - 1) + (commentVideoBean == null ? 0 : 10);
+        int count = detailVideoBean == null ? 0 : (ids.length - 1)  + (commentVideoBean == null ? 0 : 10);
         return count;
     }
 
