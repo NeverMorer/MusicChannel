@@ -29,6 +29,7 @@ import music.chaanel.com.musicchannel.R;
 import music.chaanel.com.musicchannel.W.Adapters.RecyclerAdapter;
 import music.chaanel.com.musicchannel.W.Adapters.ViewPagerAdapter;
 import music.chaanel.com.musicchannel.W.Beans.BaseBean;
+import music.chaanel.com.musicchannel.W.Beans.Refresh;
 import music.chaanel.com.musicchannel.W.Presenter.BasePresenter;
 
 /**
@@ -102,9 +103,42 @@ public abstract class VFragment extends Fragment implements PtrHandler, View.OnC
         List<BaseBean> list = new ArrayList<>();
         RecyclerAdapter adapter = new RecyclerAdapter(list,getActivity());
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                ScrollStateChanged(recyclerView,newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                RecyclerAdapter recyclerAdapter = (RecyclerAdapter) recyclerView.getAdapter();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                int itemCount = recyclerAdapter.getItemCount();
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                if(!recyclerAdapter.isRefreshing&&recyclerAdapter.hasMore&&itemCount - lastVisibleItemPosition<=3)
+                {
+                    for (Map.Entry<String, RecyclerAdapter> entry : adapterMap.entrySet()) {
+                        if(entry.getValue()==recyclerAdapter)
+                        {
+                            recyclerAdapter.add(new Refresh());
+                            requestData(entry.getKey(),"",itemCount);
+                            recyclerAdapter.isRefreshing = true;
+                        }
+                    }
+                }
+                Scrolled(recyclerView, dx, dy);
+            }
+        });
         putTag(tag, adapter);
         return layout;
     }
+
+    protected abstract void Scrolled(RecyclerView recyclerView, int dx, int dy);
+
+    abstract public void ScrollStateChanged(RecyclerView recyclerView, int newState);
 
     abstract public void putTag(int tag, RecyclerAdapter adapter);
 

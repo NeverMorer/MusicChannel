@@ -2,6 +2,7 @@ package music.chaanel.com.musicchannel.W.View;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 
 import music.chaanel.com.musicchannel.W.Adapters.RecyclerAdapter;
 import music.chaanel.com.musicchannel.W.Beans.BBBean;
@@ -43,6 +44,25 @@ public class Frg_China extends VFragment {
 
     @Override
     public void requestData(String location, String id, int page) {
+        switch (location) {
+            case "cvc":
+                RecyclerAdapter adapter = adapterMap.get(location);
+                adapter.delete(adapter.getItemCount()-1);
+                break;
+            case "bb":
+                presenter = new bbPresenter(this,getActivity());
+                presenter.go(location,page);
+                break;
+        }
+    }
+
+    @Override
+    protected void Scrolled(RecyclerView recyclerView, int dx, int dy) {
+
+    }
+
+    @Override
+    public void ScrollStateChanged(RecyclerView recyclerView, int newState) {
 
     }
 
@@ -70,10 +90,26 @@ public class Frg_China extends VFragment {
 
     @Override
     public void showData(BaseBean baseBean, String location, boolean isAdd) {
-        if(baseBean instanceof BBBean)
-            adapterMap.get(location).refresh(((BBBean) baseBean).getData().getVideos());
-        else if (baseBean instanceof CVCBean)
-            adapterMap.get(location).refresh(((CVCBean) baseBean).getData().getVideos());
+        RecyclerAdapter adapter = adapterMap.get(location);
+        if (baseBean!=null&&!adapter.isRefreshing)
+        {
+            if(baseBean instanceof BBBean)
+                adapter.refresh(((BBBean) baseBean).getData().getVideos());
+            else if (baseBean instanceof CVCBean)
+                adapter.refresh(((CVCBean) baseBean).getData().getVideos());
+        }else if(adapter.isRefreshing)
+        {
+            adapter.delete(adapter.getItemCount()-1);
+            switch (location) {
+                case "cvc":
+                    break;
+                case "bb":
+                    if(baseBean!=null)
+                        adapter.addAll(((BBBean) baseBean).getData().getVideos());
+                    break;
+            }
+        }
+        adapter.isRefreshing = false;
         if (frame != null && frame.isRefreshing())
             frame.refreshComplete();
     }

@@ -1,8 +1,4 @@
-package music.chaanel.com.musicchannel.W.Moudel;
-
-import music.chaanel.com.musicchannel.W.Beans.BBBean;
-import music.chaanel.com.musicchannel.W.Servers.UrlServer;
-import retrofit2.Call;
+package music.chaanel.com.musicchannel.W.Beans;
 
 /**
  * /**
@@ -29,13 +25,5 @@ import retrofit2.Call;
  */
 
 
-public class bbMoudel extends BaseMoudel<BBBean> {
-    public bbMoudel(String location, int page) {
-        super(location, page);
-    }
-
-    @Override
-    public Call<BBBean> getCall(UrlServer urlServer) {
-        return urlServer.getBB(page);
-    }
+public class Refresh implements BaseBean {
 }

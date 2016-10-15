@@ -1,5 +1,7 @@
 package music.chaanel.com.musicchannel.W.View;
 
+import android.support.v7.widget.RecyclerView;
+
 import music.chaanel.com.musicchannel.W.Adapters.RecyclerAdapter;
 import music.chaanel.com.musicchannel.W.Beans.BaseBean;
 import music.chaanel.com.musicchannel.W.Beans.MVBean;
@@ -32,6 +34,7 @@ import music.chaanel.com.musicchannel.W.Presenter.mvPresenter;
 
 
 public class Fragment_MV extends VFragment {
+
     @Override
     public void requestData() {
         presenter = new mvPresenter(this, getActivity(), false);
@@ -53,6 +56,17 @@ public class Fragment_MV extends VFragment {
 
     @Override
     public void requestData(String location, String id, int page) {
+        if(presenter==null)
+            presenter = new mvPresenter(this,getActivity(),false);
+        presenter.go(location,page);
+    }
+
+    @Override
+    protected void Scrolled(RecyclerView recyclerView, int dx, int dy) {
+    }
+
+    @Override
+    public void ScrollStateChanged(RecyclerView recyclerView, int newState) {
 
     }
 
@@ -89,10 +103,21 @@ public class Fragment_MV extends VFragment {
 
     @Override
     public void showData(BaseBean baseBean, String location, boolean isAdd) {
-        tv_time.setText(((MVBean) baseBean).getData().getDateCode() + " ");
-        tv_updatetime.setText(((MVBean) baseBean).getData().getBeginDateText() + "  第" + ((MVBean) baseBean).getData().getPeriods() + "期  ");
-        adapterMap.get(location).refresh(((MVBean) baseBean).getData().getVideos());
+        RecyclerAdapter adapter = adapterMap.get(location);
+        if(baseBean!=null&&!adapter.isRefreshing)
+        {
+            tv_time.setText(((MVBean) baseBean).getData().getDateCode() + " ");
+            tv_updatetime.setText(((MVBean) baseBean).getData().getBeginDateText() + "  第" + ((MVBean) baseBean).getData().getPeriods() + "期  ");
+            adapter.refresh(((MVBean) baseBean).getData().getVideos());
+        }else if(adapter.isRefreshing)
+        {
+            adapter.delete(adapter.getItemCount()-1);
+            if(baseBean!=null)
+                adapter.addAll(((MVBean) baseBean).getData().getVideos());
+        }
+        adapter.isRefreshing = false;
         if (frame != null && frame.isRefreshing())
             frame.refreshComplete();
+
     }
 }

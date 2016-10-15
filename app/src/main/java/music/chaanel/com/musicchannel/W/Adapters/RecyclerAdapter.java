@@ -1,11 +1,14 @@
 package music.chaanel.com.musicchannel.W.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -17,6 +20,7 @@ import music.chaanel.com.musicchannel.W.Beans.BBBean;
 import music.chaanel.com.musicchannel.W.Beans.BaseBean;
 import music.chaanel.com.musicchannel.W.Beans.CVCBean;
 import music.chaanel.com.musicchannel.W.Beans.MVBean;
+import music.chaanel.com.musicchannel.W.Beans.Refresh;
 
 /**
  * /**
@@ -47,6 +51,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
 
     private List<BaseBean> list;
     private Context context;
+    public boolean isRefreshing;
+    public boolean hasMore = true;
 
     public RecyclerAdapter(List<BaseBean> list, Context context) {
         this.list = list;
@@ -137,6 +143,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
             holder.tv3_bb.setText("LAST WEEK: "+((BBBean.DataBean.VideosBean) bean).getExtend().getHistoryCount());
             holder.tv4_bb.setText("PEAK POSITION: "+((BBBean.DataBean.VideosBean) bean).getExtend().getBestPosition());
             holder.tv5_bb.setText("WKS ON CHART: "+((BBBean.DataBean.VideosBean) bean).getExtend().getPrePosition());
+        }else if(bean instanceof Refresh)
+        {
+            AnimationDrawable animationDrawable = (AnimationDrawable) holder.iv_refresh.getDrawable();
+            animationDrawable.start();
         }
     }
 
@@ -168,6 +178,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
             return R.layout.cvc_inflated;
         else if(baseBean instanceof BBBean.DataBean.VideosBean)
             return R.layout.bb_inflated;
+        else if(baseBean instanceof Refresh)
+            return R.layout.refresh_animi;
         return -1;
     }
 
@@ -201,6 +213,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
         private SimpleDraweeView bb_cover;
         private TextView tv_num_bb;
         private TextView tv1_bb;
+        private ImageView iv_refresh;
 
         public mHolder(View v) {
             super(v);
@@ -228,12 +241,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
             tv3_bb = ((TextView) v.findViewById(R.id.tv3_bb));
             tv4_bb = ((TextView) v.findViewById(R.id.tv4_bb));
             tv5_bb = ((TextView) v.findViewById(R.id.tv5_bb));
+            iv_refresh = ((ImageView) v.findViewById(R.id.iv_refresh));
         }
     }
 
-    public void addAll(List<BaseBean> list){
-        this.list.addAll(list);
-        notifyItemRangeInserted(this.list.size(),list.size());
+    public void addAll(List<? extends BaseBean> list){
+        if(list!=null)
+        {
+            this.list.addAll(list);
+            notifyItemRangeInserted(this.list.size(),list.size());
+        }else
+            Toast.makeText(context,"没有更多数据了..",Toast.LENGTH_SHORT).show();
     }
 
     public void add(BaseBean baseBean){
@@ -253,6 +271,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
         notifyItemRemoved(position);
     }
 
+    public void remove(BaseBean object)
+    {
+        list.remove(object);
+        notifyDataSetChanged();
+    }
+
     public void clearAll(){
         int size = list.size();
         list.clear();
@@ -260,8 +284,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.mHolde
     }
 
     public void refresh(List<? extends BaseBean> list){
-        this.list.clear();
-        this.list.addAll(list);
-        notifyDataSetChanged();
+        if (list!=null)
+        {
+            this.list.clear();
+            this.list.addAll(list);
+            notifyDataSetChanged();
+        }
     }
 }

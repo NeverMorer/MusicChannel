@@ -50,7 +50,8 @@ public class bbPresenter extends BasePresenter implements OnLoadComplete<BBBean>
     @Override
     public void callback(Response<BBBean> response, BaseMoudel baseMoudel) {
         if (response.body() == null || response.body().getData() == null) {
-            Toast.makeText(context, "解析数据出错", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            view.showData(null,moudelMap.get(baseMoudel),false);
         } else
             view.showData(response.body(),moudelMap.get(baseMoudel),false);
     }

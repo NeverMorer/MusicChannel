@@ -2,6 +2,7 @@ package music.chaanel.com.musicchannel.W.View;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 
 import music.chaanel.com.musicchannel.W.Adapters.RecyclerAdapter;
 import music.chaanel.com.musicchannel.W.Beans.AlbumBean;
@@ -33,6 +34,16 @@ public class Frg_Album extends VFragment {
         if (presenter == null)
             presenter = new albumPresenter(this, getActivity(), false);
         ((albumPresenter) presenter).goback(location,page,id);
+    }
+
+    @Override
+    protected void Scrolled(RecyclerView recyclerView, int dx, int dy) {
+
+    }
+
+    @Override
+    public void ScrollStateChanged(RecyclerView recyclerView, int newState) {
+
     }
 
 
