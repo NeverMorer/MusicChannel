@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/BLACK"
+    tools:context="music.chaanel.com.musicchannel.W.View.Frg_Main">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/radiogroup_v"
+        android:layout_height="?attr/actionBarSize">
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:button="@null"
+            android:text="@string/mv"
+            android:textColor="@drawable/textselector"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:checked="true"
+            android:id="@+id/rb_mv"
+            android:layout_height="match_parent"
+            android:layout_weight="200" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"
+            android:background="@color/LINE"/>
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:button="@null"
+            android:id="@+id/rb_alb"
+            android:textSize="12sp"
+            android:textColor="@drawable/textselector"
+            android:gravity="center"
+            android:text="@string/album"
+            android:layout_weight="200" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"
+            android:background="@color/LINE"/>
+        <RadioButton
+            android:layout_width="0dp"
+            android:button="@null"
+            android:text="@string/china_v_chart"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:id="@+id/rb_cvc"
+            android:textColor="@drawable/textselector"
+            android:layout_height="match_parent"
+            android:layout_weight="200" />
+    </RadioGroup>
+    <include layout="@layout/line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/container"/>
+
+</LinearLayout>

@@ -7,4 +7,15 @@
     <color name="blackGrey">#343535</color>
     <color name="textColor">#48a173</color>
     <color name="shitGreen">#42a158</color>
+    <color name="colorAccent">#1a1717</color>
+    <color name="WHITE">#fff</color>
+    <color name="RED">#8f1111</color>
+    <color name="GREEN">#149600</color>
+    <color name="GREEN2">#5fd48a</color>
+    <color name="BLACK">#000</color>
+    <color name="LINE">#29281f</color>
+    <color name="PINK">#ff159a</color>
+    <color name="BLUE">#0be3ef</color>
+    <color name="GREEN3">#0bf5a7</color>
+    <color name="GRAY">#bcbbbb</color>
 </resources>
