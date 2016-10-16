@@ -9,5 +9,6 @@ import music.chaanel.com.musicchannel.homepage.presenter.IHomePresenter;
 
 public interface IHomeView<P extends IHomePresenter> {
     void showData(HomeBean homeBean);
+    void failedToShow(Throwable t);
     P getPresenter();
 }
