@@ -10,9 +10,9 @@ import org.greenrobot.greendao.annotation.Transient;
 import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
-import music.chaanel.com.musicchannel.homepage.gen.HomeDataBeanDao;
-import music.chaanel.com.musicchannel.homepage.gen.HomeWrapBeanDao;
+import music.chaanel.com.musicchannel.gen.DaoSession;
+import music.chaanel.com.musicchannel.gen.HomeDataBeanDao;
+import music.chaanel.com.musicchannel.gen.HomeWrapBeanDao;
 
 /**
  * Created by Administrator on 2016/10/12.
@@ -34,7 +34,7 @@ public class HomeWrapBean {
      "pathKey":"CAROUSEL"
      }
      */
-    @Id(autoincrement = true)
+    @Id
     private Long id;
     @Nullable
     private Long homeId;
@@ -216,19 +216,19 @@ public class HomeWrapBean {
         this.homeId = homeId;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 732850570)
-    public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getHomeWrapBeanDao() : null;
-    }
-
     public Long getId() {
         return this.id;
     }
 
     public Long getHomeId() {
         return this.homeId;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 732850570)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getHomeWrapBeanDao() : null;
     }
 
     public static class MoreData{

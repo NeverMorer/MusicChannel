@@ -2,16 +2,17 @@ package music.chaanel.com.musicchannel.homepage.presenter;
 
 import java.util.List;
 
+import music.chaanel.com.musicchannel.gen.ArtistsBeanDao;
+import music.chaanel.com.musicchannel.gen.DaoSession;
+import music.chaanel.com.musicchannel.gen.HomeBeanDao;
+import music.chaanel.com.musicchannel.gen.HomeDataBeanDao;
+import music.chaanel.com.musicchannel.gen.HomeWrapBeanDao;
 import music.chaanel.com.musicchannel.homepage.beans.ArtistsBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeDataBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeWrapBean;
 import music.chaanel.com.musicchannel.homepage.dao.GreenDaoManager;
-import music.chaanel.com.musicchannel.homepage.gen.ArtistsBeanDao;
-import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
-import music.chaanel.com.musicchannel.homepage.gen.HomeBeanDao;
-import music.chaanel.com.musicchannel.homepage.gen.HomeDataBeanDao;
-import music.chaanel.com.musicchannel.homepage.gen.HomeWrapBeanDao;
+
 import music.chaanel.com.musicchannel.homepage.server.CompoentServer;
 import music.chaanel.com.musicchannel.utils.RequestInfo;
 import music.chaanel.com.musicchannel.homepage.view.IHomeView;
@@ -67,12 +68,19 @@ public class HomePresenter implements IHomePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        getView().failedToShow(e);
+                        IHomeView view = getView();
+                        if (view != null) {
+                            view.failedToShow(e);
+                        }
                     }
 
                     @Override
                     public void onNext(HomeBean homeBean) {
-                        getView().showData(homeBean);
+                        IHomeView view = getView();
+                        if (view != null) {
+                        view.showData(homeBean);
+
+                        }
                     }
                 });
     }
@@ -95,8 +103,10 @@ public class HomePresenter implements IHomePresenter {
         homeBeanDao.insertOrReplace(homeBean);
         List<HomeWrapBean> homeWrapBeens = homeBean.getData();
         //homeWrapBeanDao.insertOrReplaceInTx(homeWrapBeens);
+        long id = 1;
         for (HomeWrapBean homeWrapBeen : homeWrapBeens) {
             homeWrapBeen.setHomeId(homeBean.get_id());
+            homeWrapBeen.setId(id ++);
             homeWrapBeanDao.insertOrReplaceInTx(homeWrapBeen);
             List<HomeDataBean> homeDataBeens = homeWrapBeen.getData();
             //homeDataBeanDao.insertOrReplaceInTx(homeDataBeens);

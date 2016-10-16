@@ -47,15 +47,18 @@ public class HomePagerAdapter extends PagerAdapter implements View.OnClickListen
         View acquire = pool.acquire();
         if (acquire == null) {
             acquire = inflater.inflate(R.layout.item_pager_home,container,false);
-            acquire.setOnClickListener(this);
+            //acquire.setOnClickListener(this);
             acquire.setTag(position);
         }
         ImageView imageView = (ImageView) acquire.findViewById(R.id.iv_pager_home);
+        ImageView iv_type = (ImageView) acquire.findViewById(R.id.iv_type_page_home);
         Picasso.with(context)
                 .load(homeDataBean.getPosterPic())
                 .placeholder(R.drawable.ad_video_default)
                 .into(imageView);
-
+        Picasso.with(context)
+                .load(homeDataBean.getDataTypeUrl())
+                .into(iv_type);
         container.addView(acquire);
         return acquire;
     }
@@ -76,7 +79,7 @@ public class HomePagerAdapter extends PagerAdapter implements View.OnClickListen
         int position = (int) view.getTag();
         HomeDataBean homeDataBean = list.get(position);
         String type = homeDataBean.getType();
-        if (TextUtils.equals("play",type)) {
+        if (!TextUtils.isEmpty(type)) {
             Long videoId = homeDataBean.getVideoId();
             Intent intent = new Intent(context, DetailActivity.class);
             intent.putExtra("id",videoId+"");

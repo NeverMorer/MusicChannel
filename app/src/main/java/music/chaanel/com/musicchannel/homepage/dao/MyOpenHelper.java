@@ -2,7 +2,8 @@ package music.chaanel.com.musicchannel.homepage.dao;
 
 import android.content.Context;
 
-import music.chaanel.com.musicchannel.homepage.gen.DaoMaster;
+import music.chaanel.com.musicchannel.gen.DaoMaster;
+
 
 /**
  * Created by Administrator on 2016/10/13.

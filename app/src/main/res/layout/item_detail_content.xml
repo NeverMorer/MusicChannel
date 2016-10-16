@@ -54,8 +54,8 @@
             android:textSize="12dp"
             android:text="播放次数:155615"/>
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/video_comment_img"
             android:id="@+id/ib_comment_detail_content"
             android:layout_marginLeft="10dp"/>
@@ -94,6 +94,7 @@
         android:paddingLeft="7dp"
         android:textColor="@android:color/white"
         android:paddingRight="7dp"
+        android:textSize="13sp"
         android:id="@+id/tv_content_detail"
         tools:text="大发来看大家费点卡啦减肥的考拉就付款单使肌肤的拉萨放到了空间啊s"/>
     <ImageView
@@ -115,11 +116,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="作者: "/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:id="@+id/tv_artist_detail"
             android:textColor="@color/textColor"
             tools:text="刘谋"/>
@@ -132,6 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_date_detail"
+            android:textSize="12sp"
             tools:text="2016:16:15"/>
 
     </LinearLayout>

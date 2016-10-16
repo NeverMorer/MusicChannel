@@ -6,8 +6,9 @@ package music.chaanel.com.musicchannel.utils;
 
 public interface RequestInfo {
     String BASE_URL = "http://mapiv2.yinyuetai.com";
-    String COMPONENT = "component/prefecture.json?&type=1";
+    String COMPONENT = "component/prefecture.json?&";
     String VIDEO = "video/detail.json?&";
+    String COMMENT = "video/comment/list_v1.json?&offset=0&size=20&";
     String[] HEADERS = {
             "Authorization : Basic MTAyMDE6ODZmMjYyOWFlMjMwMzhkZTI3ZGE1NjI5MTgxZjE3OTM=",
             "DeviceInfo : %7B%22aid%22%3A%2210201043%22%2C%22os%22%3A%22Android%22%2C%22ov%22%3A%225.1%22%2C%22rn%22%3A%22480*800%22%2C%22dn%22%",

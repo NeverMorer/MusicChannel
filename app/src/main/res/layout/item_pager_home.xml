@@ -8,12 +8,12 @@
         android:scaleType="fitXY"
         android:background="@drawable/ad_video_default"
         android:id="@+id/iv_pager_home"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/textColor"
-        android:id="@+id/tv_pager_home" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/iv_type_page_home"/>
 
 </RelativeLayout>

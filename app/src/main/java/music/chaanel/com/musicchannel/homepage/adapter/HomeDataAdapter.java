@@ -1,11 +1,13 @@
 package music.chaanel.com.musicchannel.homepage.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import music.chaanel.com.musicchannel.R;
+import music.chaanel.com.musicchannel.detailpage.view.DetailActivity;
 import music.chaanel.com.musicchannel.homepage.beans.ArtistsBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeDataBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeWrapBean;
@@ -32,7 +35,7 @@ import music.chaanel.com.musicchannel.utils.SceenUtil;
  * Created by Administrator on 2016/10/12.
  */
 
-public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyViewHolder> {
+public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyViewHolder> implements View.OnClickListener {
 
     private List<HomeWrapBean> list;
     private Context context;
@@ -42,6 +45,7 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
             R.layout.layout_group_home,
             R.layout.layout_list_home
     };
+    private RecyclerView recyclerView;
 
     public HomeDataAdapter(Context context) {
         inflater = LayoutInflater.from(context);
@@ -59,9 +63,11 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
             this.list = list;
             notifyItemRangeInserted(0,list.size()-1);
         }
+    }
 
-
-
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -82,6 +88,7 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                 break;
             case 6:
                 view = inflater.inflate(ids[2],parent,false);
+                //view.setOnClickListener(this);
                 holder = new MyViewHolder(view);
                 holder.setType(6);
                 break;
@@ -123,6 +130,8 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
                 for (int i = 0; i < list_hdb.size(); i++) {
                     View view = inflater.inflate(R.layout.item_list_home, holder.container_list, false);
                     ImageView iv = (ImageView) view.findViewById(R.id.iv_list_home);
+                    iv.setTag(i);
+                    iv.setOnClickListener(this);
                     TextView tv_name = (TextView) view.findViewById(R.id.tv_name_list_home);
                     TextView tv_author = (TextView) view.findViewById(R.id.tv_author_list_home);
                     TextView tv_playtimes = (TextView) view.findViewById(R.id.tv_playtimes_list_home);
@@ -152,6 +161,22 @@ public class HomeDataAdapter extends RecyclerView.Adapter<HomeDataAdapter.MyView
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int position = recyclerView.getChildAdapterPosition((View) view.getParent().getParent().getParent());
+        HomeDataBean homeDataBean = list.get(position).getData().get(((int) view.getTag()));
+        String type = homeDataBean.getType();
+        if (!TextUtils.isEmpty(type)) {
+            Long videoId = homeDataBean.getVideoId();
+            Intent intent = new Intent(context, DetailActivity.class);
+            intent.putExtra("id",videoId+"");
+            intent.putExtra("type",1);
+
+            context.startActivity(intent);
+        }
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements ViewPager.OnPageChangeListener {

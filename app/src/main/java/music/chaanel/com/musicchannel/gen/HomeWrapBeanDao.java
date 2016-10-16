@@ -1,4 +1,4 @@
-package music.chaanel.com.musicchannel.homepage.gen;
+package music.chaanel.com.musicchannel.gen;
 
 import java.util.List;
 import android.database.Cursor;
@@ -54,7 +54,7 @@ public class HomeWrapBeanDao extends AbstractDao<HomeWrapBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"HOME_WRAP_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"HOME_ID\" INTEGER," + // 1: homeId
                 "\"TYPE\" INTEGER NOT NULL ," + // 2: type
                 "\"TITLE\" TEXT," + // 3: title

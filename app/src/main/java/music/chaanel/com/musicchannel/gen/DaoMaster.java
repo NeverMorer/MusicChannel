@@ -1,4 +1,4 @@
-package music.chaanel.com.musicchannel.homepage.gen;
+package music.chaanel.com.musicchannel.gen;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

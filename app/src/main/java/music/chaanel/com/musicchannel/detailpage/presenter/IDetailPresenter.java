@@ -9,5 +9,6 @@ import music.chaanel.com.musicchannel.detailpage.view.IDetailView;
 public interface IDetailPresenter {
     void bingView(IDetailView view);
     void unBindView();
-    void handleData(String videoId);
+    void handleData(String videoId,int type);
+    void handleCommentData(String videoId);
 }

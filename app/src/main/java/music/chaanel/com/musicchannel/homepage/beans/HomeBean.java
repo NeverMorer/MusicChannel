@@ -7,9 +7,9 @@ import org.greenrobot.greendao.annotation.ToMany;
 import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
-import music.chaanel.com.musicchannel.homepage.gen.HomeWrapBeanDao;
-import music.chaanel.com.musicchannel.homepage.gen.HomeBeanDao;
+import music.chaanel.com.musicchannel.gen.DaoSession;
+import music.chaanel.com.musicchannel.gen.HomeWrapBeanDao;
+import music.chaanel.com.musicchannel.gen.HomeBeanDao;
 
 /**
  * Created by Administrator on 2016/10/12.

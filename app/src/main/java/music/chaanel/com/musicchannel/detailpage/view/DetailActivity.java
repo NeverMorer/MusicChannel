@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -26,6 +27,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -33,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import music.chaanel.com.musicchannel.R;
 import music.chaanel.com.musicchannel.detailpage.adapter.DetailDataAdapter;
+import music.chaanel.com.musicchannel.detailpage.beans.CommentVideoBean;
 import music.chaanel.com.musicchannel.detailpage.beans.DetailVideoBean;
 import music.chaanel.com.musicchannel.detailpage.presenter.DetailPresenter;
 import music.chaanel.com.musicchannel.utils.MyTextUtil;
@@ -69,6 +73,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
     private ObjectAnimator alphaShow;
     private ObjectAnimator alphaGone;
     private DetailDataAdapter detailDataAdapter;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +91,13 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
 
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        type = intent.getIntExtra("type",-1);
 
         presenter = getPresenter();
         presenter.bingView(this);
-        presenter.handleData(id);
+        presenter.handleData(id,type);
 
-        startAnim();
+        //startAnim();
     }
 
     public void startAnim(){
@@ -100,8 +106,7 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         rotateX.setRepeatCount(100);
         rotateX.start();
 
-        alphaShow = ObjectAnimator.ofFloat(container_player,"alpha",0,100).setDuration(1000);
-        alphaGone = ObjectAnimator.ofFloat(container_player,"alpha",100,0).setDuration(1000);
+
 
     }
 
@@ -109,10 +114,14 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         //recyclerView.addItemDecoration(new MyItemDecorator());
         detailDataAdapter = new DetailDataAdapter(this);
         recyclerView.setAdapter(detailDataAdapter);
+        recyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(detailDataAdapter));
+
+        alphaShow = ObjectAnimator.ofFloat(container_player,"alpha",0,100).setDuration(1000);
+        alphaGone = ObjectAnimator.ofFloat(container_player,"alpha",100,0).setDuration(1000);
 
         container_player.setTag(1);
 
-        rb_play.setOnCheckedChangeListener(this);
+        //rb_play.setOnCheckedChangeListener(this);
         rb_play.setEnabled(false);
 
         mediaPlayer = new MediaPlayer();
@@ -136,7 +145,12 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         if(isLoaded){
             startPlay(holder);
         }
+        presenter.handleCommentData(id);
+    }
 
+    @Override
+    public void showData(CommentVideoBean commentVideoBean) {
+        detailDataAdapter.setCommentData(commentVideoBean);
     }
 
     @Override
@@ -149,6 +163,12 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         return new DetailPresenter();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        AnimationDrawable animationDrawable = (AnimationDrawable) iv_load.getDrawable();
+        animationDrawable.start();
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -182,7 +202,10 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
+        AnimationDrawable animationDrawable = (AnimationDrawable) iv_load.getDrawable();
+        animationDrawable.stop();
         iv_load.setVisibility(View.GONE);
+
         mediaPlayer.start();
         isVideoLoaded = true;
         rb_play.setEnabled(true);
@@ -240,7 +263,6 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
                 }
 
                 break;
-            case R.id.rb_play_play:
 
         }
     }
@@ -263,30 +285,4 @@ public class DetailActivity extends AppCompatActivity implements IDetailView<Det
         }
     }
 
-    public static class MyItemDecorator extends RecyclerView.ItemDecoration{
-
-        private final Paint paint;
-
-        public MyItemDecorator() {
-            paint = new Paint();
-            paint.setColor(Color.rgb(0xe4,0xe4,0xe0));
-        }
-
-        @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            int childCount = parent.getChildCount();
-            for (int i = 0; i < childCount; i++) {
-                View childAt = parent.getChildAt(i);
-                int y = childAt.getBottom() + 5;
-                c.drawLine(0, y,parent.getWidth(),y,paint);
-
-            }
-
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            outRect.set(5,5,5,5);
-        }
-    }
 }

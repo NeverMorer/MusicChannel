@@ -16,12 +16,13 @@ import android.widget.Toast;
 import java.util.List;
 
 import music.chaanel.com.musicchannel.R;
+import music.chaanel.com.musicchannel.gen.DaoSession;
+import music.chaanel.com.musicchannel.gen.HomeBeanDao;
 import music.chaanel.com.musicchannel.homepage.adapter.HomeDataAdapter;
 import music.chaanel.com.musicchannel.homepage.beans.HomeBean;
 import music.chaanel.com.musicchannel.homepage.beans.HomeWrapBean;
 import music.chaanel.com.musicchannel.homepage.dao.GreenDaoManager;
-import music.chaanel.com.musicchannel.homepage.gen.DaoSession;
-import music.chaanel.com.musicchannel.homepage.gen.HomeBeanDao;
+
 import music.chaanel.com.musicchannel.homepage.presenter.HomePresenter;
 
 /**

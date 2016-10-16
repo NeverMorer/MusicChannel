@@ -26,6 +26,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+		
     }
 }
  
@@ -33,7 +34,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 greendao {  
     schemaVersion 1  
-    daoPackage 'music.chaanel.com.musicchannel.homepage.gen'  
+    daoPackage 'music.chaanel.com.musicchannel.gen'  
     targetGenDir 'src/main/java'  
 }  
 
@@ -61,4 +62,7 @@ dependencies {
 	compile 'io.reactivex:rxjava:1.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+	
+	compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+    
 }
