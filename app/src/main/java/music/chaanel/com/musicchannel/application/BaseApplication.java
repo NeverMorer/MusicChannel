@@ -1,6 +1,8 @@
-package music.chaanel.com.musicchannel.homepage.application;
+package music.chaanel.com.musicchannel.application;
 
 import android.app.Application;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import music.chaanel.com.musicchannel.homepage.dao.GreenDaoManager;
 
@@ -13,5 +15,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         GreenDaoManager.init(this);
+        Fresco.initialize(this);
     }
 }

@@ -6,17 +6,13 @@
 
 <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name=".homepage.application.BaseApplication"
+        android:name=".application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".W.View.App"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".W.View.TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
